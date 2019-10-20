@@ -1,0 +1,57 @@
+﻿@using SimpleMatrix
+@using Web_100thTrying.Models
+
+@model MatrixWrapper
+
+@{
+    ViewData["Title"] = "CG Method";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Please, input the matrix:</p>
+
+<div style="display:flex">
+    @for (int i = 0; i < @Model.n; i++)
+    {
+        <div style="width: 182px; align-content: center">
+            @("x" + @i)
+        </div>
+    }
+    <div style="width: 182px; align-content: center">
+       b
+    </div>
+</div>
+
+<form method="post" action="/cg">
+    <input type="hidden" value="@Model.n" name="n">
+
+    @for (int i = 0; i < @Model.n; i++)
+    {
+        <p>
+            @for (int j = 0; j < @Model.n; j++)
+            {
+                <input type="number" value="@Model.matrix.data[i][j]" name="numbers">
+            }
+
+            <input type="number" value="@Model.b[i]" name="b">
+        </p>
+    }
+    
+    <input type="submit" value="Get result"/>
+</form>
+
+<div id="resultArea">
+    <hr/>
+    @if (Model.have_result)
+    {
+        <h3>Roots</h3>
+        for (int i = 0; i < Model.result.Length; i++)
+        {
+            <p>
+                @("x" + @i + ": " + Model.result[i])
+            </p>
+        }
+    }
+
+</div>
